@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+// importando la configuración de la conección con la base de datos
+const { dbConnection } = require("../database/config");
 
 class Server {
   constructor() {
@@ -7,12 +9,22 @@ class Server {
     this.port = process.env.PORT;
     this.usuariosPath = "/api/usuarios";
 
+    // conectar base de datos
+
+    this.conectarDB();
+
     // middlewares
 
     this.middlewares();
 
     // rutas
     this.routes();
+  }
+
+  // funcion para conectar a la base de datos mongoDB que importamos desde config.js
+
+  async conectarDB() {
+    await dbConnection();
   }
 
   // ---------------------- middlewares ---------------------------
